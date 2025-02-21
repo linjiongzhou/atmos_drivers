@@ -394,7 +394,7 @@ subroutine atmos_model_init (Atmos, Time_init, Time, Time_step, iau_offset)
   integer :: mlon, mlat, nlon, nlat, nlev, sec, dt
   integer(kind=8) :: sec_prev
   integer :: ierr, io, logunit
-  integer :: idx, tile_num, nq, nwat, mp_flag
+  integer :: idx, tile_num, nq, nwat, ncat, mp_flag
   integer :: isc, iec, jsc, jec
   integer :: isd, ied, jsd, jed
   integer :: blk, ibs, ibe, jbs, jbe
@@ -468,7 +468,7 @@ subroutine atmos_model_init (Atmos, Time_init, Time, Time_step, iau_offset)
 !--- before going any further check definitions for 'blocks'
 !-----------------------------------------------------------------------
    call atmosphere_control_data (isc, iec, jsc, jec, nlev, p_hydro, hydro, tile_num, &
-                                 nq, do_inline_mp, do_cosp, nwat, mp_flag)
+                                 nq, do_inline_mp, do_cosp, nwat, ncat, mp_flag)
    call define_blocks_packed ('atmos_model', Atm_block, isc, iec, jsc, jec, nlev, &
                               blocksize, block_message)
 
@@ -524,6 +524,7 @@ subroutine atmos_model_init (Atmos, Time_init, Time, Time_step, iau_offset)
    Init_parm%do_inline_mp    = do_inline_mp
    Init_parm%do_cosp         = do_cosp
    Init_parm%nwat            = nwat
+   Init_parm%ncat            = ncat
    Init_parm%mp_flag         = mp_flag
 
    allocate(Init_parm%input_nml_file, mold=input_nml_file)
